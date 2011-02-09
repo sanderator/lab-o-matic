@@ -13,7 +13,7 @@ from javax.tools import (ForwardingJavaFileManager, ToolProvider,
          DiagnosticCollector, StandardLocation)
 from java.io import File
 
-import exam_o_matic
+from exam_o_matic import exam_default, jdom_path, junit_path
 
 def clean(bytecode):
     '''
@@ -68,7 +68,7 @@ def _compile(names, bytecode):
     manager = compiler.getStandardFileManager(diagnostics, None, None)
     units = manager.getJavaFileObjectsFromStrings(names)
     # sets junit onto the classpath
-    manager.setLocation(StandardLocation.CLASS_PATH, [File(exam_o_matic.junit_path), File(bytecode)])
+    manager.setLocation(StandardLocation.CLASS_PATH, [File(jdom_path), File(junit_path), File(bytecode)])
     # sets appropriate location for output
     manager.setLocation(StandardLocation.CLASS_OUTPUT, [File(bytecode)])
     comp_task = compiler.getTask(None, manager, diagnostics, None, None, units)

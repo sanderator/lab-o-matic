@@ -6,6 +6,9 @@ A few things needed by modules in this package.
 '''
 import sys
 
+jdom_path = '/usr/share/java/jdom1.jar'
 junit_path = '/usr/share/java/junit4.jar'
 sys.path.append(junit_path)
 sys.path.append('/usr/share/java/hamcrest-core.jar')
+
+exam_default = ''

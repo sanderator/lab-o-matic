@@ -13,18 +13,21 @@ import exam_o_matic.compiler
 import exam_o_matic.runner
 import exam_o_matic.check_for_stuff
 
-_bytecode_path_default = 'build/classes'
+from exam_o_matic import exam_default
+
+_bytecode_path_default = '/build/classes'
 _decryption_key_default = '1827640192877364539209487126355121984'
-_exam_default = '/examenPOO_'
+#_exam_default = '/examenPOO_'
+#_exam_default = ''
 
 def main(decryption_key, paths, tests, check_for_stuff):
     '''
     Decrypts submitted copy, compiles application and tests; runs tests.
     '''
-    result = exam_o_matic.decryptor.decrypt(paths, decryption_key)
-    if True:
-        # de-archives submission
-        result = exam_o_matic.dearchiver.dearchive(paths)
+#    result = exam_o_matic.decryptor.decrypt(paths, decryption_key)
+#    if True:
+#        # de-archives submission
+#        result = exam_o_matic.dearchiver.dearchive(paths)
     if True:
         (src_ok, tests_ok) = exam_o_matic.compiler.compile(paths)
     if check_for_stuff:
@@ -46,9 +49,9 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     paths = {}
     paths['student'] = options.apps_path + '/' + options.student
-    paths['apps'] = paths['student'] + _exam_default + options.student + '/src'
-    paths['test'] = paths['student'] + _exam_default + options.student + '/test'
-    paths['bytecode'] = paths['student'] + _exam_default + options.student + '/' + _bytecode_path_default
+    paths['apps'] = paths['student'] + '/src'
+    paths['test'] = paths['student'] + '/test'
+    paths['bytecode'] = paths['student'] + _bytecode_path_default
     sys.path.append(paths['bytecode'])
     tests = []
     if len(options.unit_tests):
