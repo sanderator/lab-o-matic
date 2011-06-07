@@ -6,6 +6,9 @@ A few things needed by modules in this package.
 '''
 import sys
 
+archive_types = ('.jar', '.tgz')
+findbugs_path = '/opt/software/findbugs/bin'
+sys.path.append(findbugs_path)
 jdom_path = '/usr/share/java/jdom1.jar'
 junit_path = '/usr/share/java/junit4.jar'
 sys.path.append(junit_path)

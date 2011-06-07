@@ -7,13 +7,16 @@ author: (c)2010 Peter Sander
 version: $Id: compiler.py 369 2010-11-15 16:54:17Z sander $
 '''
 
-import glob, os
+import glob, os, sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../test/rt.jar'))
+from javax.tools import ForwardingJavaFileManager
 
 from javax.tools import (ForwardingJavaFileManager, ToolProvider,
          DiagnosticCollector, StandardLocation)
 from java.io import File
 
-from exam_o_matic import exam_default, jdom_path, junit_path
+from lab_o_matic import exam_default, jdom_path, junit_path
 
 def clean(bytecode):
     '''
