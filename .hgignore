@@ -1,4 +1,5 @@
-
+syntax: glob
+*.java
 syntax: glob
 *.pyc
 syntax: glob
@@ -7,3 +8,5 @@ syntax: glob
 .project
 syntax: glob
 .pydevproject
+syntax: glob
+.settings
