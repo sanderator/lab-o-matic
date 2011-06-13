@@ -1,14 +1,11 @@
 #! /usr/bin/env jython
 '''
-Created on Feb 6, 2011
+Automagically analyzes a student code submission, eg, an assignment.
 
 @author: sander
 '''
 
-import sys
-
 import lab_o_matic.dearchiver
-import lab_o_matic.decryptor
 import lab_o_matic.compiler
 import lab_o_matic.findbugs
 import lab_o_matic.runner
@@ -29,17 +26,12 @@ def main(decryption_key, paths, tests, check_for_stuff, findbugs=False):
 #    result = lab_o_matic.decryptor.decrypt(paths, decryption_key)
 #    if True:
         # de-archives submission
-    result = lab_o_matic.dearchiver.dearchive(paths)
-    if result:
-        pass
-#        (src_ok, tests_ok) = lab_o_matic.compiler.compile(paths)
-#    if check_for_stuff:
-#        lab_o_matic.check_for_stuff.check_for_stuff(paths)
-#    if (findbugs):
-#        lab_o_matic.findbugs.findbugs(paths)
-#    if src_ok and tests_ok:
-#        lab_o_matic.runner.runner(tests)
-#    lab_o_matic.compiler.clean(paths['bytecode'])
+    if lab_o_matic.dearchiver.dearchive(paths):
+        # de-archived ok, let's compile the source code
+        if lab_o_matic.compiler.compile(paths):
+            # compiled ok, let's do unnatural things to it
+            lab_o_matic.findbugs.findbugs(paths)
+            lab_o_matic.check_for_stuff.check_for_stuff(paths)
     
 
 if __name__ == '__main__':
