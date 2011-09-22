@@ -43,6 +43,12 @@ def dearchive_tar(a_file, paths):
     tar_file.close()
     return True  # hope that's alright
 
+def dearchive_gz(a_file, paths):
+    '''
+    De-archives a gzipped tar file.
+    '''
+    return dearchive_tar(a_file, paths)
+
 def dearchive_tgz(a_file, paths):
     '''
     De-archives a gzipped tar file.

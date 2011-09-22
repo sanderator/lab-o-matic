@@ -43,30 +43,3 @@ def compile(paths):
     print('compiling java source code %s into %s' % (files, paths['bytecode']))
 #    return subprocess.call(('/usr/bin/javac', '-d', paths['bytecode'], '`find', '"*.java"`'))
     return not subprocess.call(('/usr/bin/javac', '-d', paths['bytecode'], files[0], files[1], files[2]))
-
-#def _files2compile(dirs, files=[]):
-#    if len(dirs) == 0: 
-#        return (dirs, files)
-    
-
-def _compile(names, bytecode):
-    '''
-    Classes from the javax.tools package do the compiling
-    '''
-    success = False
-    compiler = ToolProvider.getSystemJavaCompiler()
-    diagnostics = DiagnosticCollector()
-    manager = compiler.getStandardFileManager(diagnostics, None, None)
-    units = manager.getJavaFileObjectsFromStrings(names)
-    # sets junit onto the classpath
-    manager.setLocation(StandardLocation.CLASS_PATH, [File(jdom_path), File(junit_path), File(bytecode)])
-    # sets appropriate location for output
-    manager.setLocation(StandardLocation.CLASS_OUTPUT, [File(bytecode)])
-    comp_task = compiler.getTask(None, manager, diagnostics, None, None, units)
-    success = comp_task.call()  # you go, compiler!
-    manager.close()
-    if diagnostics.getDiagnostics().size() > 0:
-        print('Whoops - got some diagnostics for ya...')
-        from java.util import Locale
-        print("".join([diagnostic.getMessage(Locale.CANADA) for diagnostic in diagnostics.getDiagnostics()]))
-    return success
