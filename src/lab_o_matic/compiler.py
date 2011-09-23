@@ -39,7 +39,5 @@ def compile(paths):
     # compiles source code
     for path in os.walk(sourcecode_dir):
         files += glob.glob(path[0] + '/*.java')
-#    files = ' '.join(files)
     print('compiling java source code %s into %s' % (files, paths['bytecode']))
-#    return subprocess.call(('/usr/bin/javac', '-d', paths['bytecode'], '`find', '"*.java"`'))
-    return not subprocess.call(('/usr/bin/javac', '-d', paths['bytecode'], files[0], files[1], files[2]))
+    return not subprocess.call(['/usr/bin/javac', '-d', paths['bytecode']] + files)
