@@ -5,15 +5,10 @@ author: (c)2010 Peter Sander
 '''
 
 import glob, os, subprocess, sys
-#
-#sys.path.append(os.path.join(os.path.dirname(__file__), '../../test/rt.jar'))
-#from javax.tools import ForwardingJavaFileManager
-#
-#from javax.tools import (ForwardingJavaFileManager, ToolProvider,
-#         DiagnosticCollector, StandardLocation)
-#from java.io import File
-#
-#from lab_o_matic import exam_default, jdom_path, junit_path
+
+from lab_o_matic import java
+from lab_o_matic import javac
+from lab_o_matic import junit_path
 
 def clean(bytecode):
     '''
@@ -40,4 +35,4 @@ def compile(paths):
     for path in os.walk(sourcecode_dir):
         files += glob.glob(path[0] + '/*.java')
     print('compiling java source code %s into %s' % (files, paths['bytecode']))
-    return not subprocess.call(['/usr/bin/javac', '-d', paths['bytecode']] + files)
+    return not subprocess.call([javac, '-d', paths['bytecode'], '-cp', paths['bytecode'] + ':' + junit_path] + files)

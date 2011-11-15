@@ -7,11 +7,11 @@ A few things needed by modules in this package.
 import sys
 
 archive_types = ('.gz', '.jar', '.tgz')
+findbugs_home = '/opt/software/findbugs/lib'
 findbugs_path = '/opt/software/findbugs/bin'
 sys.path.append(findbugs_path)
+javac = '/usr/bin/javac'
+java = '/usr/bin/java'
+jar = '/usr/bin/jar'
 jdom_path = '/usr/share/java/jdom1.jar'
 junit_path = '/usr/share/java/junit4.jar'
-sys.path.append(junit_path)
-sys.path.append('/usr/share/java/hamcrest-core.jar')
-
-exam_default = ''

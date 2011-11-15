@@ -10,20 +10,12 @@ Created on Apr 13, 2011
 import os.path
 import subprocess
 
-_findbugs_home = '/opt/software/findbugs/lib'
+from lab_o_matic import java
+from lab_o_matic import findbugs_home
+
 
 def findbugs(paths):
     print('Running findbugs on code in %s' % paths['bytecode'])
-    try:
-        paths['findbugs_home']
-    except KeyError:
-        paths['findbugs_home'] = _findbugs_home
-    try:
-        paths['findbugs_output']
-    except KeyError:
-        findbugs_output = os.path.join(paths['projects'], '%s/findbugs.fb' % (paths['student']))
-        paths['findbugs_output'] = findbugs_output
-            
-    return not subprocess.call(('/usr/bin/java', '-jar', '%s/findbugs.jar' % (paths['findbugs_home']),
-                                '-textui', '-output', paths['findbugs_output'], paths['bytecode']))
-
+    findbugs_output = os.path.join(paths['projects'], '%s/findbugs.fb' % (paths['student']))
+    return not subprocess.call((java, '-jar', '%s/findbugs.jar' % (findbugs_home),
+                                '-textui', '-output', findbugs_output, paths['bytecode']))
