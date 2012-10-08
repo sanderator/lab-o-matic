@@ -17,7 +17,7 @@ def clean(bytecode):
     import shutil
     shutil.rmtree(bytecode)
 
-def compile(paths):
+def compile(paths, encoding):
     '''
     Compiles any .java files it finds.
     The paths argument determines where to look for source files and
@@ -35,4 +35,4 @@ def compile(paths):
     for path in os.walk(sourcecode_dir):
         files += glob.glob(path[0] + '/*.java')
     print('compiling java source code %s into %s' % (files, paths['bytecode']))
-    return not subprocess.call([javac, '-d', paths['bytecode'], '-cp', paths['bytecode'] + ':' + junit_path] + files)
+    return not subprocess.call([javac, '-encoding', encoding, '-d', paths['bytecode'], '-cp', paths['bytecode'] + ':' + junit_path] + files)

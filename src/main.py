@@ -7,6 +7,7 @@ Automagically analyzes a student code submission, eg, an assignment.
 
 import lab_o_matic.dearchiver
 import lab_o_matic.compiler
+from lab_o_matic import encoding
 from lab_o_matic.findbugs import findbugs
 import lab_o_matic.runner
 #import lab_o_matic.check_for_stuff
@@ -20,7 +21,7 @@ def main(paths, runnable_classes, optionals, unit_tests):
     # to de-archive or not to de-archive
     if not optionals['dearchive'] or lab_o_matic.dearchiver.dearchive(paths):
         # de-archived ok, let's compile the source code
-        if lab_o_matic.compiler.compile(paths):
+        if lab_o_matic.compiler.compile(paths, optionals['encoding']):
             # compiled ok, let's do unnatural things to it
             if optionals['findbugs']:
                 findbugs(paths)
@@ -39,6 +40,7 @@ if __name__ == '__main__':
     parser = OptionParser()
 #    parser.add_option('-c', '--check_for_stuff', action='store_true', dest='check_for_stuff',
 #                      default=False, help='set to check for code features')
+    parser.add_option('-e', '--encoding', dest='encoding', default=encoding, help='source file character encoding (you probably want ISO8859-1)')
     parser.add_option('-f', '--findbugs', action='store_true', dest='findbugs', default=False, help='run findbugs on code')
     parser.add_option('--no-dearchive', action='store_false', dest='dearchive', default=True, help='do not de-archive student project')
     parser.add_option('-p', '--projects', dest='projects', help='directory containing student project directories')
@@ -49,6 +51,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     optionals = {}
 #    optionals['check_for_stuff'] = options.check_for_stuff
+    optionals['encoding'] = options.encoding
     optionals['findbugs'] = options.findbugs
     optionals['dearchive'] = options.dearchive
     runnable_classes = []
