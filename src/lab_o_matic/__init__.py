@@ -6,7 +6,7 @@ A few things needed by modules in this package.
 '''
 import sys
 
-archive_types = ('.gz', '.jar', '.tgz')
+archive_types = ('.gz', '.jar', '.tgz', '.zip')
 encoding = 'UTF-8'
 findbugs_home = '/opt/software/findbugs/lib'
 findbugs_path = '/opt/software/findbugs/bin'

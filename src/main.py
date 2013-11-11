@@ -15,7 +15,7 @@ import lab_o_matic.runner
 
 def main(paths, runnable_classes, optionals, unit_tests):
     '''
-    Decrypts submitted copy, compiles application and JUnit tests.
+    De-archives submitted copy, compiles application and JUnit tests.
     Runs findbugs static code analyzer. Runs JUnit tests.
     '''
     # to de-archive or not to de-archive

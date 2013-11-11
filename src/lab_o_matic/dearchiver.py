@@ -8,6 +8,7 @@ Currently only works with Java .jar archives.
 import os.path
 import subprocess
 import tarfile
+import zipfile
 
 from lab_o_matic import archive_types
 from lab_o_matic import jar
@@ -56,6 +57,16 @@ def dearchive_tgz(a_file, paths):
     De-archives a gzipped tar file.
     '''
     return dearchive_tar(a_file, paths)
+
+def dearchive_zip(a_file, paths):
+    '''
+    De-archives a zipped file.
+    '''
+    print('%s is a zipfile = %s' % (a_file, zipfile.is_zipfile(a_file)))
+    zf = zipfile.ZipFile(a_file)
+    zf.extractall()
+    zf.close()
+    return True
 
 def dearchive_dispatcher(archive_type):
     '''
