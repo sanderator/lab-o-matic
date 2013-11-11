@@ -6,6 +6,7 @@ Automagically analyzes a student code submission, eg, an assignment.
 '''
 
 import lab_o_matic.dearchiver
+from lab_o_matic.diagram import diagram
 import lab_o_matic.compiler
 from lab_o_matic import encoding
 from lab_o_matic.findbugs import findbugs
@@ -23,6 +24,8 @@ def main(paths, runnable_classes, optionals, unit_tests):
         # de-archived ok, let's compile the source code
         if lab_o_matic.compiler.compile(paths, optionals['encoding']):
             # compiled ok, let's do unnatural things to it
+            if optionals['diagram']:
+                diagram(paths)
             if optionals['findbugs']:
                 findbugs(paths)
             # either runs application or runs unit tests on application
@@ -40,6 +43,7 @@ if __name__ == '__main__':
     parser = OptionParser()
 #    parser.add_option('-c', '--check_for_stuff', action='store_true', dest='check_for_stuff',
 #                      default=False, help='set to check for code features')
+    parser.add_option('-d', '--diagram', action='store_true', dest='diagram', default=False, help='create and display UML class diagram')
     parser.add_option('-e', '--encoding', dest='encoding', default=encoding, help='source file character encoding (you probably want ISO8859-1)')
     parser.add_option('-f', '--findbugs', action='store_true', dest='findbugs', default=False, help='run findbugs on code')
     parser.add_option('--no-dearchive', action='store_false', dest='dearchive', default=True, help='do not de-archive student project')
@@ -51,6 +55,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     optionals = {}
 #    optionals['check_for_stuff'] = options.check_for_stuff
+    optionals['diagram'] = options.diagram
     optionals['encoding'] = options.encoding
     optionals['findbugs'] = options.findbugs
     optionals['dearchive'] = options.dearchive

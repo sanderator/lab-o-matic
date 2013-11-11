@@ -7,9 +7,15 @@ A few things needed by modules in this package.
 import sys
 
 archive_types = ('.gz', '.jar', '.tgz', '.zip')
+dot = '/usr/bin/dot'
+doxygen ='/usr/bin/doxygen'
+doxygen_config = '/home/sander/.doxygen.config'
+doxygraph_home = '/opt/software/doxygraph'
 encoding = 'UTF-8'
 findbugs_home = '/opt/software/findbugs/lib'
 findbugs_path = '/opt/software/findbugs/bin'
+okular = '/usr/bin/okular'
+perl = '/usr/bin/perl'
 sys.path.append(findbugs_path)
 javac = '/usr/bin/javac'
 java = '/usr/bin/java'
