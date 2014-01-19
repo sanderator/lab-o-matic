@@ -1,6 +1,6 @@
 '''
 De-archives student submissions.
-Currently only works with Java .jar archives.
+Works with the following archives: jar, rar, tar .gz and .tgz, zip.
 
 @author: sander
 '''
@@ -12,6 +12,7 @@ import zipfile
 
 from lab_o_matic import archive_types
 from lab_o_matic import jar
+from lab_o_matic import unrar
 
 def dearchive(paths):
     '''
@@ -36,6 +37,12 @@ def dearchive_jar(a_file, paths):
     De-archives a jar file.
     '''
     return not subprocess.call((jar, '-xf', a_file))  # because subprocess returns 0 on success
+
+def dearchive_rar(a_file, paths):
+    '''
+    De-archives a rar file.
+    '''
+    return not subprocess.call((unrar, 'x', a_file))  # because subprocess returns 0 on success
 
 def dearchive_tar(a_file, paths):
     '''

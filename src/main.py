@@ -22,7 +22,7 @@ def main(paths, runnable_classes, optionals, unit_tests):
     # to de-archive or not to de-archive
     if not optionals['dearchive'] or lab_o_matic.dearchiver.dearchive(paths):
         # de-archived ok, let's compile the source code
-        if lab_o_matic.compiler.compile(paths, optionals['encoding']):
+        if not optionals['compile'] or lab_o_matic.compiler.compile(paths, optionals['encoding']):
             # compiled ok, let's do unnatural things to it
             if optionals['diagram']:
                 diagram(paths)
@@ -46,6 +46,7 @@ if __name__ == '__main__':
     parser.add_option('-d', '--diagram', action='store_true', dest='diagram', default=False, help='create and display UML class diagram')
     parser.add_option('-e', '--encoding', dest='encoding', default=encoding, help='source file character encoding (you probably want ISO8859-1)')
     parser.add_option('-f', '--findbugs', action='store_true', dest='findbugs', default=False, help='run findbugs on code')
+    parser.add_option('--no-compile', action='store_false', dest='compile', default=True, help='do not compile student project')
     parser.add_option('--no-dearchive', action='store_false', dest='dearchive', default=True, help='do not de-archive student project')
     parser.add_option('-p', '--projects', dest='projects', help='directory containing student project directories')
     parser.add_option('-r', '--run', dest='runnable_classes', default='', help='list of classes to run')
@@ -55,6 +56,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     optionals = {}
 #    optionals['check_for_stuff'] = options.check_for_stuff
+    optionals['compile'] = options.compile
     optionals['diagram'] = options.diagram
     optionals['encoding'] = options.encoding
     optionals['findbugs'] = options.findbugs
