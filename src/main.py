@@ -2,7 +2,7 @@
 '''
 Automagically analyzes a student code submission, eg, an assignment.
 
-@author: sander
+@author: (c)2010-14 Peter Sander
 '''
 
 import lab_o_matic.dearchiver
@@ -14,7 +14,7 @@ import lab_o_matic.runner
 #import lab_o_matic.check_for_stuff
 
 
-def main(paths, runnable_classes, optionals, unit_tests):
+def main(paths, runnable_classes, optionals):
     '''
     De-archives submitted copy, compiles application and JUnit tests.
     Runs findbugs static code analyzer. Runs JUnit tests.
@@ -34,8 +34,8 @@ def main(paths, runnable_classes, optionals, unit_tests):
 #            if optionals['check_for_stuff']:
 #                lab_o_matic.check_for_stuff.check_for_stuff(paths)
 #            if len(unit_tests):
-            else:
-                lab_o_matic.runner.run_tests(paths, unit_tests)
+            if optionals['unit_tests']:
+                lab_o_matic.runner.run_tests(paths)
     
 
 if __name__ == '__main__':
@@ -46,13 +46,15 @@ if __name__ == '__main__':
     parser.add_option('-d', '--diagram', action='store_true', dest='diagram', default=False, help='create and display UML class diagram')
     parser.add_option('-e', '--encoding', dest='encoding', default=encoding, help='source file character encoding (you probably want ISO8859-1)')
     parser.add_option('-f', '--findbugs', action='store_true', dest='findbugs', default=False, help='run findbugs on code')
+    parser.add_option('-j', '--jars', dest='jars', default='', help='jar files on classpath')
     parser.add_option('--no-compile', action='store_false', dest='compile', default=True, help='do not compile student project')
     parser.add_option('--no-dearchive', action='store_false', dest='dearchive', default=True, help='do not de-archive student project')
     parser.add_option('-p', '--projects', dest='projects', help='directory containing student project directories')
     parser.add_option('-r', '--run', dest='runnable_classes', default='', help='list of classes to run')
     parser.add_option('-s', '--student', dest='student', help='student name')
 #    parser.add_option('-t', '--type_archive', dest='archive_type', default=_archive_file_type, help='archive file type')
-    parser.add_option('-u', '--unit_tests', dest='unit_tests', default='', help='list of unit tests to run')
+#     parser.add_option('-u', '--unit_tests', dest='unit_tests', default='', help='list of unit tests to run')
+    parser.add_option('-u', '--unit_tests', action='store_true', dest='unit_tests', help='run all unit tests')
     (options, args) = parser.parse_args()
     optionals = {}
 #    optionals['check_for_stuff'] = options.check_for_stuff
@@ -64,10 +66,11 @@ if __name__ == '__main__':
     runnable_classes = []
     if len(options.runnable_classes):
         runnable_classes = options.runnable_classes.split()
+    optionals['unit_tests'] = options.unit_tests
     paths = {}
+    paths['jars'] = options.jars
     paths['projects'] = options.projects
     paths['student'] = options.student
-    unit_tests = []
-    if len(options.unit_tests):
-        unit_tests = options.unit_tests.split()
-    main(paths, runnable_classes, optionals, unit_tests)
+#     if len(options.unit_tests):
+#         unit_tests = options.unit_tests.split()
+    main(paths, runnable_classes, optionals)

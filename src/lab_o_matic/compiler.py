@@ -35,4 +35,6 @@ def compile(paths, encoding):
     for path in os.walk(sourcecode_dir):
         files += glob.glob(path[0] + '/*.java')
     print('compiling java source code %s into %s' % (files, paths['bytecode']))
-    return not subprocess.call([javac, '-encoding', encoding, '-d', paths['bytecode'], '-cp', paths['bytecode'] + ':' + junit_path] + files)
+#     return not subprocess.call([javac, '-encoding', encoding, '-d', paths['bytecode'], '-cp', paths['bytecode'] + ':' + junit_path] + files)
+    return not subprocess.call([javac, '-encoding', encoding, '-d', paths['bytecode'], '-cp', 
+                                '%s:%s:%s' % (paths['bytecode'], junit_path, paths['jars'])] + files)
