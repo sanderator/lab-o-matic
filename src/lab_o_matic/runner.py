@@ -20,11 +20,11 @@ def run_classes(paths, runnable_classes):
         for runnable in runnable_classes:
             print('running %s from %s' % (runnable, paths['bytecode']))
             # factoid - a successful subprocess.call returns 0
-            if subprocess.call((java, '-cp', paths['bytecode'], runnable)):
+            if subprocess.call((java, '-cp', '%s:%s' % (paths['bytecode'], paths['jars']), runnable)):
                 print('OOPS! %s screwed up somewhere' % runnable)
     return 0  # Ok, we're being optimistic here
 
-def run_tests(paths, tests):
+def run_tests(paths):
     '''
     Runs all unit tests in class classes in or below the class directory.
     '''
@@ -37,7 +37,8 @@ def run_tests(paths, tests):
     test_classes = [path.split('/') for path in test_classes]
     test_classes = [path2long_name(path) for path in test_classes]
     print('testing  %s' % test_classes)
-    subprocess.call([java, '-cp', paths['bytecode'] + ':' + junit_path, 'org.junit.runner.JUnitCore'] + test_classes)
+#     subprocess.call([java, '-cp', paths['bytecode'] + ':' + junit_path, 'org.junit.runner.JUnitCore'] + test_classes)
+    subprocess.call([java, '-cp', '%s:%s:%s' % (paths['bytecode'], junit_path, paths['jars']), 'org.junit.runner.JUnitCore'] + test_classes)
     
 def path2long_name(path):
     '''
