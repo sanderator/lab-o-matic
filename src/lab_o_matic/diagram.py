@@ -1,7 +1,7 @@
 ''' module diagram.py
 Creates and displays a UML class diagram.
 
-@author:  (c)2013 Peter Sander
+@author: (c)2013-2015 Peter Sander
 '''
 
 import os
@@ -29,9 +29,12 @@ def diagram(paths):
     # must be run from the doxygraph home directory
     os.chdir(doxygraph_home)
     graph_dot = os.path.join(student_dir, 'graph.dot')
-    subprocess.call((perl, 'doxygraph/doxygraph', os.path.join(student_dir, 'xml/index.xml'), graph_dot))
+    subprocess.call((perl, 'doxygraph/doxygraph',
+                     os.path.join(student_dir,
+                                  'xml/index.xml'), graph_dot))
     # and dot converts dot file to pdf
-    subprocess.call((dot, '-T', 'pdf', '-o', os.path.join(student_dir, 'UML.pdf'), graph_dot))
+    subprocess.call((dot, '-T', 'pdf',
+                     '-o', os.path.join(student_dir, 'UML.pdf'), graph_dot))
     # cleans up after itself
     shutil.rmtree(os.path.join(student_dir, 'xml'))
     os.remove(os.path.join(student_dir, 'graph.dot'))

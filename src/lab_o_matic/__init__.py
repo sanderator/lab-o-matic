@@ -7,7 +7,7 @@ import sys
 
 archive_types = ('.gz', '.jar', '.rar', '.tgz', '.zip')
 dot = '/usr/bin/dot'
-doxygen ='/usr/bin/doxygen'
+doxygen = '/usr/bin/doxygen'
 #doxygen_config = '/home/sander/.doxygen.config'
 doxygen_config = '/home/sander/.doxygen.config_iso8859-1'
 doxygraph_home = '/opt/software/doxygraph'

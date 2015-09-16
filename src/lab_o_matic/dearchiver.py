@@ -2,7 +2,7 @@
 De-archives student submissions.
 Works with the following archives: jar, rar, tar .gz and .tgz, zip.
 
-@author: sander
+@author: (c)2010-2015 Peter Sander
 '''
 
 import os.path
@@ -14,9 +14,11 @@ from lab_o_matic import archive_types
 from lab_o_matic import jar
 from lab_o_matic import unrar
 
+
 def dearchive(paths):
     '''
-    De-archives the first archive file found in the student submitted directory.
+    De-archives the first archive file found in the student submitted
+    directory.
     '''
     result = False
     student_dir = os.path.join(paths['projects'], paths['student'])
@@ -24,7 +26,8 @@ def dearchive(paths):
     for a_file in os.listdir(student_dir):
         file_ext = os.path.splitext(a_file)[1]
         if archive_types.__contains__(file_ext):
-            os.chdir(os.path.join(paths['projects'], paths['student']))  # cd to student directory
+            # cd to student directory
+            os.chdir(os.path.join(paths['projects'], paths['student']))
             dearchive_func = dearchive_dispatcher(file_ext[1:])
             result = dearchive_func(a_file, paths)
             if result:
@@ -32,17 +35,22 @@ def dearchive(paths):
                 return result
     return result
 
+
 def dearchive_jar(a_file, paths):
     '''
     De-archives a jar file.
     '''
-    return not subprocess.call((jar, '-xf', a_file))  # because subprocess returns 0 on success
+    # subprocess returns 0 on success
+    return not subprocess.call((jar, '-xf', a_file))
+
 
 def dearchive_rar(a_file, paths):
     '''
     De-archives a rar file.
     '''
-    return not subprocess.call((unrar, 'x', a_file))  # because subprocess returns 0 on success
+    # because subprocess returns 0 on success
+    return not subprocess.call((unrar, 'x', a_file))
+
 
 def dearchive_tar(a_file, paths):
     '''
@@ -53,17 +61,20 @@ def dearchive_tar(a_file, paths):
     tar_file.close()
     return True  # hope that's alright
 
+
 def dearchive_gz(a_file, paths):
     '''
     De-archives a gzipped tar file.
     '''
     return dearchive_tar(a_file, paths)
 
+
 def dearchive_tgz(a_file, paths):
     '''
     De-archives a gzipped tar file.
     '''
     return dearchive_tar(a_file, paths)
+
 
 def dearchive_zip(a_file, paths):
     '''
@@ -74,6 +85,7 @@ def dearchive_zip(a_file, paths):
     zf.extractall()
     zf.close()
     return True
+
 
 def dearchive_dispatcher(archive_type):
     '''
